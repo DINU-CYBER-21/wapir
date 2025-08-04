@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DARK X - Pair Connection</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --my-red: #ff1a1a;
+      --my-dark: #000000;
+      --my-light-red: #ff4d4d;
+      --my-gold: #ff9999;
+      --my-glow: rgba(255, 26, 26, 0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background-color: var(--my-dark);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 30px 15px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(to right, var(--my-red), var(--my-gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 30px;
+      text-align: center;
+      text-shadow: 0 0 10px rgba(255, 26, 26, 0.8);
+    }
+
+    .container {
+      background: rgba(255, 26, 26, 0.15);
+      border-radius: 15px;
+      border: 2px solid var(--my-red);
+      box-shadow: 0 0 25px var(--my-red);
+      width: 100%;
+      max-width: 600px;
+      padding: 30px 25px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: block;
+      color: var(--my-light-red);
+      text-shadow: 0 0 6px var(--my-glow);
+    }
+
+    input[type="text"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 2px solid var(--my-red);
+      background: rgba(255, 26, 26, 0.2);
+      color: white;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    input[type="text"]:focus,
+    input[type="tel"]:focus {
+      outline: none;
+      border-color: var(--my-gold);
+      background: rgba(255, 26, 26, 0.3);
+      box-shadow: 0 0 12px var(--my-red);
+    }
+
+    .btn {
+      background: linear-gradient(
+        90deg,
+        var(--my-red) 0%,
+        var(--my-light-red) 50%,
+        var(--my-red) 100%
+      );
+      border: none;
+      color: white;
+      padding: 15px;
+      border-radius: 55px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 0 15px var(--my-red);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+    .btn:hover {
+      box-shadow: 0 0 30px var(--my-gold);
+      transform: translateY(-4px);
+    }
+    .btn:disabled,
+    .btn[disabled] {
+      cursor: not-allowed;
+      opacity: 0.5;
+      box-shadow: none;
+      transform: none;
+    }
+
+    #connected-message {
+      background: rgba(255, 26, 26, 0.4);
+      padding: 20px;
+      border-radius: 15px;
+      border: 2px solid var(--my-gold);
+      box-shadow: 0 0 15px var(--my-gold);
+      font-size: 1.25rem;
+      color: var(--my-gold);
+      text-align: center;
+      user-select: text;
+      word-break: break-word;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Animation for sparkle next to connected message */
+    #connected-message::after {
+      content: "\f00c";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      margin-left: 10px;
+      color: var(--my-gold);
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        text-shadow: 0 0 6px var(--my-gold);
+      }
+      50% {
+        text-shadow: 0 0 20px var(--my-gold);
+      }
+      100% {
+        text-shadow: 0 0 6px var(--my-gold);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      .container {
+        padding: 20px 15px;
+      }
+      input[type="text"],
+      input[type="tel"] {
+        font-size: 14px;
+      }
+      .btn {
+        font-size: 16px;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>DARK X - Pair Connection</h1>
+
+  <div class="container" id="pair-container">
+    <!-- Pair Message Input -->
+    <div>
+      <label for="pair-text">Connect Message (Custom Text)</label>
+      <input
+        type="text"
+        id="pair-text"
+        placeholder="Enter your connection message here"
+        maxlength="100"
+      />
+    </div>
+
+    <button id="connect-btn" class="btn">
+      <i class="fas fa-link"></i> Connect Pair
+    </button>
+
+    <!-- Connected Message Display -->
+    <div id="connected-message" class="hidden"></div>
+
+    <!-- WhatsApp Number Input -->
+    <div id="whatsapp-section" class="hidden" style="margin-top: 25px;">
+      <label for="whatsapp-number">Enter WhatsApp Number to Pair</label>
+      <input
+        type="tel"
+        id="whatsapp-number"
+        placeholder="e.g. 94771234567"
+        maxlength="12"
+      />
+      <button id="pair-whatsapp-btn" class="btn" style="margin-top: 15px;">
+        <i class="fab fa-whatsapp"></i> Pair Now
+      </button>
+
+      <button
+        id="disconnect-btn"
+        class="btn"
+        style="margin-top: 15px; background: var(--my-light-red); display: none;"
+      >
+        <i class="fas fa-unlink"></i> Disconnect Pair
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const connectBtn = document.getElementById("connect-btn");
+    const pairTextInput = document.getElementById("pair-text");
+    const connectedMessageDiv = document.getElementById("connected-message");
+    const whatsappSection = document.getElementById("whatsapp-section");
+    const whatsappInput = document.getElementById("whatsapp-number");
+    const pairWhatsappBtn = document.getElementById("pair-whatsapp-btn");
+    const disconnectBtn = document.getElementById("disconnect-btn");
+
+    window.onload = () => {
+      const savedMessage = localStorage.getItem("pairMessage");
+      const savedNumber = localStorage.getItem("pairedNumber");
+
+      if (savedMessage) {
+        connectedMessageDiv.textContent = `Pair Connected: "${savedMessage}"`;
+        connectedMessageDiv.classList.remove("hidden");
+        whatsappSection.classList.remove("hidden");
+        pairTextInput.value = savedMessage;
+        connectBtn.disabled = true;
+        pairTextInput.disabled = true;
+        if (savedNumber) {
+          whatsappInput.value = savedNumber;
+          whatsappInput.disabled = true;
+          pairWhatsappBtn.style.display = "none";
+          disconnectBtn.style.display = "flex";
+        } else {
+          whatsappInput.disabled = false;
+          whatsappInput.value = "";
+          pairWhatsappBtn.style.display = "flex";
+          disconnectBtn.style.display = "none";
+        }
+      } else {
+        whatsappSection.classList.add("hidden");
+        connectedMessageDiv.classList.add("hidden");
+        connectBtn.disabled = false;
+        pairTextInput.disabled = false;
+        pairTextInput.value = "";
+      }
+    };
+
+    connectBtn.addEventListener("click", () => {
+      const message = pairTextInput.value.trim();
+      if (!message) {
+        alert("කරුණාකර Connection Message එකක් ටයිප් කරන්න.");
+        return;
+      }
+
+      localStorage.setItem("pairMessage", message);
+      connectedMessageDiv.textContent = `Pair Connected: "${message}"`;
+      connectedMessageDiv.classList.remove("hidden");
+      whatsappSection.classList.remove("hidden");
+      connectBtn.disabled = true;
+      pairTextInput.disabled = true;
+    });
+
+    pairWhatsappBtn.addEventListener("click", () => {
+      const number = whatsappInput.value.trim();
+      if (!/^94\d{9}$/.test(number)) {
+        alert("කරුණාකර නිවැරදි Sri Lanka WhatsApp අංකයක් ඇතුලත් කරන්න. (94XXXXXXXXX)");
+        return;
+      }
+
+      localStorage.setItem("pairedNumber", number);
+      whatsappInput.disabled = true;
+      pairWhatsappBtn.style.display = "none";
+      disconnectBtn.style.display = "flex";
+
+      alert(`Pair කිරීම සාර්ථකයි: ${number}`);
+
+      // Optional: open WhatsApp chat tab automatically
+      // window.open(`https://wa.me/${number}`, "_blank");
+    });
+
+    disconnectBtn.addEventListener("click", () => {
+      localStorage.removeItem("pairedNumber");
+      localStorage.removeItem("pairMessage");
+
+      whatsappInput.disabled = false;
+      whatsappInput.value = "";
+      disconnectBtn.style.display = "none";
+      pairWhatsappBtn.style.display = "flex";
+
+      connectBtn.disabled = false;
+      pairTextInput.disabled = false;
+      pairTextInput.value = "";
+      connectedMessageDiv.classList.add("hidden");
+      whatsappSection.classList.add("hidden");
+
+      alert("Pair එක අක්‍රීය කරන ලදි.");
+    });
+  </script>
+</body>
+</html>

@@ -16,7 +16,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // 🛡️ Developer WhatsApp Number
-const DEV_NUMBER = '94767019114', '94712345678', '94787654321'; // Change if needed
+const DEV_NUMBER = '94767019114'; // Change if needed
 
 // 🧹 Remove session directory
 function removeFile(filePath) {

@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 
 // Importing the 'pair' module
-import code from './pair.js';
+import code from 'pair.js';
 
 const app = express();
 
